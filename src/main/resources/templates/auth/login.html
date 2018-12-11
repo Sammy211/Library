@@ -1,0 +1,48 @@
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Библиотека</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='stylesheet' href='/webjars/bootstrap/4.1.3/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/webjars/font-awesome/5.5.0/css/all.min.css'>
+
+</head>
+
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="front/index :: navbar"></nav>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Все книги</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/mylist}">Мои книги</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/wishlist}">Список желаний</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9 col-12">
+            <h3 class="mb-3 display-4">Вход</h3>
+            <div class="alert alert-danger" th:if="${errors != null}">
+                <p th:text="${errors}"></p>
+            </div>
+            <form th:action="@{/login}" method="post" class="form">
+                <div class="form-group">
+                    <input class="form-control" type="text" th:name="username" placeholder="Имя пользователя">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" th:name="password" placeholder="Пароль">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit">Вход</button>
+                    <a th:href="@{/register}" class="btn btn-link" >Нет аккаунта?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="/webjars/popper.js/1.14.3/popper.min.js"></script>
+<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

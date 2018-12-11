@@ -1,0 +1,52 @@
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Админ панель</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='stylesheet' href='/webjars/bootstrap/4.1.3/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/webjars/font-awesome/5.5.0/css/all.min.css'>
+
+</head>
+
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="admin/index :: navbar"></nav>
+    <div class="row">
+        <div class="col-md-2 col-12" th:replace="admin/index :: sidebar"/>
+        <div class="col-md-10 col-12">
+            <h3 class="display-4">Список книг</h3>
+            <a th:href="@{/admin/book/create}" class="btn btn-success mb-3 mt-3">Добавить книгу</a>
+            <div class="table-responsive">
+                <table class="table" th:if="${books.size() > 0}">
+                    <thead>
+                    <tr>
+                        <th>Заголовок</th>
+                        <th>Автор</th>
+                        <th>Дата</th>
+                        <th>Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book : ${books}">
+                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.author}"></td>
+                        <td th:text="${book.writtenDate}"></td>
+                        <td>
+                            <a th:href="@{/admin/book/edit/{id}(id=${book.id})}" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                            <a onclick="return confirm('Вы действительно хотите удалить эту книгу?')" th:href="@{/admin/book/delete/{id}(id=${book.id})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="/webjars/popper.js/1.14.3/popper.min.js"></script>
+<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

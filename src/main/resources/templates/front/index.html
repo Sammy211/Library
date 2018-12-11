@@ -1,0 +1,85 @@
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Библиотека</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='stylesheet' href='/webjars/bootstrap/4.1.3/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/webjars/font-awesome/5.5.0/css/all.min.css'>
+
+</head>
+
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
+        <a class="navbar-brand" th:href="@{/}">Библиотека</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/}">Главная</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Мои списки
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/mylist}">Список взятых</a>
+                        <a class="dropdown-item" th:href="@{/wishlist}">Список желаний</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:if="${user == null}" th:href="@{/login}">Войти</a>
+                    <a class="nav-link" th:unless="${user == null}" th:href="@{/logout}">Выйти</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-2 col-12">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Все книги</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/mylist}">Мои книги</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/wishlist}">Список желаний</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10 col-12">
+            <h3 class="mb-3 display-4">Все книги</h3>
+            <div class="table-responsive">
+                <table class="table" th:if="${books.size() > 0}">
+                    <thead>
+                    <tr>
+                        <th>Заголовок</th>
+                        <th>Автор</th>
+                        <th>Год</th>
+                        <th>Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book : ${books}">
+                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.author}"></td>
+                        <td th:text="${book.writtenDate}"></td>
+                        <td>
+                            <a th:if="${user == null || !user.hasTakenBook(book)}" th:href="@{/mylist/add/{id}(id=${book.id})}" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                            <a th:if="${user != null && user.hasTakenBook(book)}" th:href="@{/mylist/delete/{id}(id=${book.id})}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+
+                            <a th:if="${user == null || !user.hasInWishList(book)}" th:href="@{/wishlist/add/{id}(id=${book.id})}" class="btn btn-primary"><i class="fa fa-heart"></i></a>
+                            <a th:if="${user != null && user.hasInWishList(book)}" th:href="@{/wishlist/delete/{id}(id=${book.id})}" class="btn btn-secondary"><i class="fa fa-minus-circle"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="/webjars/popper.js/1.14.3/popper.min.js"></script>
+<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

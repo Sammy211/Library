@@ -1,0 +1,69 @@
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Админ панель</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='stylesheet' href='/webjars/bootstrap/4.1.3/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/webjars/font-awesome/5.5.0/css/all.min.css'>
+
+</head>
+
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="admin/index :: navbar"></nav>
+    <div class="row">
+        <div class="col-md-2 col-12" th:replace="admin/index :: sidebar"/>
+        <div class="col-md-10 col-12">
+            <h3 class="display-4">Добавить пользователя</h3>
+            <div class="alert alert-danger" th:if="${errors != null}">
+                <p th:utext="${errors}"></p>
+            </div>
+            <form th:action="@{/admin/user/create}" th:object="${user}" method="post" class="form">
+                <div class="form-group">
+                    <label>Логин *</label>
+                    <input type="text" class="form-control" th:field="*{username}">
+                </div>
+                <div class="form-group">
+                    <label>Имя *</label>
+                    <input type="text" class="form-control" th:field="*{name}">
+                </div>
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <input type="text" class="form-control" th:field="*{address}">
+                </div>
+                <div class="form-group">
+                    <label>Дата рождения</label>
+                    <input type="text" class="form-control" th:field="*{birthday}">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" class="form-control" th:field="*{password}">
+                </div>
+                <div class="form-group">
+                    <label class="">Роль</label>
+                    <select th:field="*{roles}">
+                        <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="">Статус</label>
+                    <input type="checkbox" th:field="*{active}" th:value="*{active}">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="/webjars/popper.js/1.14.3/popper.min.js"></script>
+<script src="/webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>
